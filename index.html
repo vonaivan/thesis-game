@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treasure Trails</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+
+    background:#4aa3ff;
+    overflow:hidden;
+
+}
+
+#menu{
+
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+.card{
+
+    width:520px;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+
+}
+
+h1{
+
+    text-align:center;
+    margin-bottom:10px;
+    color:#1d3557;
+
+}
+
+.subtitle{
+
+    text-align:center;
+    margin-bottom:25px;
+    color:#555;
+
+}
+
+label{
+
+    font-weight:bold;
+
+}
+
+input,
+select{
+
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    margin-bottom:20px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    font-size:16px;
+
+}
+
+button{
+
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
+    background:#2a9d8f;
+    color:white;
+    transition:.2s;
+
+}
+
+button:hover{
+
+    background:#23867a;
+
+}
+
+#gameUI{
+
+    display:none;
+    width:100%;
+    height:100vh;
+    position:relative;
+
+}
+
+canvas{
+
+    background:#78c850;
+    display:block;
+    margin:auto;
+    image-rendering:pixelated;
+
+}
+
+#hud{
+
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:white;
+    padding:10px 20px;
+    border-radius:12px;
+    box-shadow:0 5px 10px rgba(0,0,0,.2);
+
+}
+
+#timer{
+
+    color:#d62828;
+    font-weight:bold;
+    font-size:18px;
+
+}
+
+.popup{
+
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:500px;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    display:none;
+    box-shadow:0 15px 35px rgba(0,0,0,.4);
+
+}
+
+.popup h2{
+
+    margin-bottom:15px;
+    color:#264653;
+
+}
+
+.popup p{
+
+    margin-bottom:15px;
+    line-height:1.6;
+
+}
+
+.answers{
+
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+
+}
+
+.answers button{
+
+    background:#457b9d;
+
+}
+
+.answers button:hover{
+
+    background:#326983;
+
+}
+
+.small{
+
+    font-size:14px;
+    color:#555;
+    margin-top:15px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="menu">
+
+<div class="card">
+
+<h1>Treasure Trails</h1>
+
+<p class="subtitle">
+Research Game Instrument
+</p>
+
+<label>
+Participant ID
+</label>
+
+<input
+type="text"
+id="participant"
+placeholder="Example: P001">
+
+<label>
+Select Group
+</label>
+
+<select id="group">
+
+<option value="control">
+Control Group
+</option>
+
+<option value="experimental">
+Experimental Group
+</option>
+
+</select>
+
+<button id="startBtn">
+
+Start Game
+
+</button>
+
+<p class="small">
+
+Collect all 10 coins.
+
+Control players receive the basic version.
+
+Experimental players receive a 30-second premium trial.
+
+</p>
+
+</div>
+
+</div>
+
+<div id="gameUI">
+
+<div id="hud">
+
+<div>
+
+Coins:
+<span id="coinCount">
+
+0
+
+</span>
+
+/10
+
+</div>
+
+<div>
+
+Time:
+
+<span id="time">
+
+0
+
+</span>
+
+sec
+
+</div>
+
+<div>
+
+<span id="timer">
+
+</span>
+
+</div>
+
+</div>
+
+<canvas
+id="game"
+width="960"
+height="640">
+
+</canvas>
+
+</div>
+
+<div
+class="popup"
+id="trialPopup">
+
+<h2>
+
+🎁 Premium Trial
+
+</h2>
+
+<p>
+
+Try the Premium Explorer Pack for FREE.
+
+You will receive:
+
+</p>
+
+<ul>
+
+<li>Premium Map</li>
+
+<li>Faster Movement</li>
+
+<li>Golden Character</li>
+
+<li>Special Coin Effects</li>
+
+</ul>
+
+<br>
+
+<button id="useTrial">
+
+Use Free Trial
+
+</button>
+
+<br><br>
+
+<button id="skipTrial">
+
+Skip
+
+</button>
+
+</div>
+
+<div
+class="popup"
+id="trialEnded">
+
+<h2>
+
+Trial Ended
+
+</h2>
+
+<p>
+
+Your free trial has ended.
+
+The game will continue using the basic version.
+
+</p>
+
+<button id="continueBtn">
+
+Continue
+
+</button>
+
+</div>
+
+<div
+class="popup"
+id="survey">
+
+<h2>
+
+Purchase Intention
+
+</h2>
+
+<p>
+
+Would you purchase the Explorer Pass
+for ₱99?
+
+</p>
+
+<div class="answers">
+
+<button data-answer="Definitely Not">
+
+Definitely Not
+
+</button>
+
+<button data-answer="Probably Not">
+
+Probably Not
+
+</button>
+
+<button data-answer="Neutral">
+
+Neutral
+
+</button>
+
+<button data-answer="Probably Yes">
+
+Probably Yes
+
+</button>
+
+<button data-answer="Definitely Yes">
+
+Definitely Yes
+
+</button>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
