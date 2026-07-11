@@ -160,20 +160,59 @@ button:hover{
 
 }
 
-canvas{
+#gameBoard{
 
-    display:block;
+    display:grid;
 
-    margin:auto;
+    margin:80px auto;
 
-    background:#78c850;
+    width:max-content;
 
     border:6px solid #355e3b;
 
+    background:#78c850;
+
     image-rendering:pixelated;
+
+    gap:2px;
+
+    padding:4px;
 
 }
 
+.tile{
+
+    width:40px;
+
+    height:40px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:24px;
+
+}
+
+.grass{
+
+    background:#7ed957;
+
+}
+
+.tree{
+
+    background:#3d7d3d;
+
+}
+
+.coin{
+
+    background:#9be564;
+
+}
 /* ==========================
    HUD
 ========================== */
@@ -315,5 +354,91 @@ canvas{
     height:auto;
 
 }
+
+}
+
+/* ==========================
+   TILE MAP
+========================== */
+
+#gameBoard{
+
+    margin:70px auto;
+
+    display:grid;
+
+    gap:2px;
+
+    width:max-content;
+
+}
+
+.tile{
+
+    width:40px;
+
+    height:40px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:24px;
+
+    border-radius:4px;
+
+}
+
+.grass{
+
+    background:#7ed957;
+
+}
+
+.tree{
+
+    background:#4b8b3b;
+
+}
+
+.coin{
+
+    background:#9be564;
+
+}
+
+#timer{
+
+    color:gold;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
+.tree{
+
+    background:#2f7d32;
+
+}
+
+.grass{
+
+    background:#7ddc5c;
+
+}
+
+.coin{
+
+    background:#a5f56a;
+
+}
+
+.tile{
+
+    transition:.15s;
 
 }
