@@ -482,3 +482,54 @@ canvas{
     transition:.15s;
 
 }
+
+
+/* ===============================
+   PREMIUM MAP
+=============================== */
+
+.premium{
+
+    background:#c8f7c5 !important;
+
+}
+
+.premium .grass{
+
+    background:#9cff6b;
+
+}
+
+.premium .tree{
+
+    background:#228B22;
+
+}
+
+.premium .coin{
+
+    background:gold;
+
+    color:#ffcc00;
+
+    font-size:28px;
+
+    animation: coinGlow 1s infinite alternate;
+
+}
+
+@keyframes coinGlow{
+
+    from{
+
+        transform:scale(1);
+
+    }
+
+    to{
+
+        transform:scale(1.2);
+
+    }
+
+}

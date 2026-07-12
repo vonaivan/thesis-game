@@ -54,7 +54,7 @@ const gameUI = document.getElementById("gameUI");
 
 const coinLabel = document.getElementById("coinCount");
 
-const timerLabel = document.getElementById("timer");
+const timerLabel = document.getElementById("time");
 
 const survey = document.getElementById("survey");
 
@@ -80,7 +80,7 @@ const originalMap = [
 
 ["T","G","T","G","G","G","T","G","C","T"],
 
-["T","F","G","G","W","G","G","G","G","T"],
+["T","F","G","C","W","G","G","G","G","T"],
 
 ["T","C","G","R","G","C","T","G","F","T"],
 
@@ -90,7 +90,7 @@ const originalMap = [
 
 ["T","G","G","G","G","G","W","C","G","T"],
 
-["T","F","G","C","G","G","G","G","C","T"],
+["T","F","G","C","G","G","G","X","C","T"],
 
 ["T","T","T","T","T","T","T","T","T","T"]
 
@@ -209,8 +209,7 @@ function startGameTimer(){
 
         elapsedSeconds++;
 
-        timerLabel.textContent =
-            elapsedSeconds + " sec";
+        timerLabel.textContent = elapsedSeconds;
 
     },1000);
 
@@ -374,7 +373,29 @@ function checkWin(){
 
     }
 
-    alert("Great! Return to the treasure chest!");
+    if(group === "Control"){
+
+        finishControlGame();
+
+    }
+
+    else if(group === "Experimental"){
+
+        finishExperimentalGame();
+
+    }
+
+}
+
+function finishControlGame(){
+
+    survey.querySelector("h2").textContent =
+        "Purchase Intention Survey";
+
+    survey.querySelector("p").textContent =
+        "You played the standard version of Treasure Trails. Would you purchase the Premium Map for ₱99?";
+
+    survey.style.display = "flex";
 
 }
 
@@ -517,12 +538,17 @@ document.getElementById("skipTrial").addEventListener("click",function(){
 // ===============================
 
 function startPremiumTrial(){
+    
+    document.getElementById("premiumStatus").textContent =
+    "⭐ Premium Trial Active";
 
     trialUsed = true;
 
     trialActive = true;
 
     player.premium = true;
+
+    gameBoard.classList.add("premium");
 
     player.speed = 2;
 
@@ -558,16 +584,20 @@ function startPremiumTrial(){
 
 function endPremiumTrial(){
 
+    document.getElementById("premiumStatus").textContent =
+    "Standard Version";
+
     clearInterval(trialInterval);
 
     trialActive = false;
 
     player.premium = false;
 
+    gameBoard.classList.remove("premium");
+
     player.speed = 1;
 
-    timerLabel.textContent =
-        elapsedSeconds + " sec";
+    timerLabel.textContent = elapsedSeconds;
 
     trialEndedPopup.style.display = "flex";
 
@@ -589,11 +619,40 @@ document.getElementById("continueBtn").addEventListener("click",function(){
 // GAME COMPLETE
 // ===============================
 
-function finishGame(){
+function finishControlGame(){
+
+    clearInterval(timerInterval);
+
+    gameStarted = false;
+
+    survey.querySelector("h2").textContent =
+        "Purchase Intention Survey";
+
+    survey.querySelector("p").textContent =
+        "After playing the standard version, would you purchase the Premium Explorer Pass for ₱99?";
 
     survey.style.display = "flex";
 
 }
+
+function finishExperimentalGame(){
+
+    clearInterval(timerInterval);
+
+    clearInterval(trialInterval);
+
+    gameStarted = false;
+
+    survey.querySelector("h2").textContent =
+        "Purchase Intention Survey";
+
+    survey.querySelector("p").textContent =
+        "After experiencing the Premium Trial, would you purchase the Premium Explorer Pass for ₱99?";
+
+    survey.style.display = "flex";
+
+}
+
 
 console.log("Treasure Trails Final - Part 2 Loaded");
 
@@ -632,14 +691,21 @@ function exportCSV(answer){
 
     const values = [
 
-        participantID,
-        group,
-        player.coins,
-        elapsedSeconds,
-        trialUsed ? "Yes" : "No",
-        answer
+    participantID,
 
-    ];
+    group,
+
+    player.coins,
+
+    elapsedSeconds,
+
+    group === "Experimental"
+        ? (trialUsed ? "Yes" : "No")
+        : "N/A",
+
+    answer
+
+];
 
     let csv = headers.join(",") + "\n";
 
