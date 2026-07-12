@@ -444,7 +444,7 @@ function startExperimentalGroup(id){
 
 document.getElementById("startBtn").addEventListener("click", function(){
 
-    const idInput = document.getElementById("participantID");
+    const idInput = document.getElementById("participant");
 
     const groupInput = document.getElementById("group");
 
@@ -464,15 +464,15 @@ document.getElementById("startBtn").addEventListener("click", function(){
 
     }
 
-    if(groupInput.value === "Control"){
+    if(groupInput.value === "control"){
 
-        startControlGroup(idInput.value);
+    startControlGroup(idInput.value);
 
-    }else{
+}else if(groupInput.value === "experimental"){
 
-        startExperimentalGroup(idInput.value);
+    startExperimentalGroup(idInput.value);
 
-    }
+}
 
 });
 
