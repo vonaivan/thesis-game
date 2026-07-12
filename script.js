@@ -72,7 +72,7 @@ const trialEndedPopup = document.getElementById("trialEnded");
 // R = Rock
 // ===============================
 
-const map = [
+const originalMap = [
 
 ["T","T","T","T","T","T","T","T","T","T"],
 
@@ -95,6 +95,8 @@ const map = [
 ["T","T","T","T","T","T","T","T","T","T"]
 
 ];
+
+let map = [];
 
 // ===============================
 // TILE CREATION
@@ -381,6 +383,8 @@ function checkWin(){
 // ===============================
 
 function initializeGame(){
+    
+    map = JSON.parse(JSON.stringify(originalMap));
 
     player.row = 1;
 
