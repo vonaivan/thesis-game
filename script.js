@@ -76,21 +76,21 @@ const map = [
 
 ["T","T","T","T","T","T","T","T","T","T"],
 
-["T","G","G","G","C","G","G","F","G","T"],
+["T","G","C","G","F","G","C","F","G","T"],
 
 ["T","G","T","G","G","G","T","G","C","T"],
 
 ["T","F","G","G","W","G","G","G","G","T"],
 
-["T","C","G","R","G","G","T","G","F","T"],
+["T","C","G","R","G","C","T","G","F","T"],
 
-["T","G","G","T","G","G","G","G","G","T"],
+["T","G","G","T","G","G","G","C","G","T"],
 
 ["T","G","C","G","F","T","G","G","G","T"],
 
 ["T","G","G","G","G","G","W","C","G","T"],
 
-["T","F","G","G","G","G","G","G","C","T"],
+["T","F","G","C","G","G","G","G","C","T"],
 
 ["T","T","T","T","T","T","T","T","T","T"]
 
@@ -120,11 +120,21 @@ function createTile(type){
 
             break;
 
+	case "X":
+
+    	    tile.classList.add("chest");
+
+            tile.innerHTML = "📦";
+
+    	break;
+
         case "C":
 
-            tile.classList.add("coin");
+    tile.classList.add("coin");
 
-            break;
+    tile.innerHTML = "🪙";
+
+    break;
 
         case "W":
 
@@ -170,8 +180,8 @@ function drawMap(){
             if(r===player.row && c===player.col){
 
                 tile.innerHTML = player.premium
-                    ? "⭐"
-                    : "🙂";
+    		? "🤠"
+    		: "😀";
 
             }
 
@@ -246,6 +256,8 @@ function collectCoin(){
 
     coinLabel.textContent = player.coins;
 
+    drawMap();
+
     checkWin();
 
 }
@@ -281,6 +293,14 @@ function movePlayer(dr, dc){
         player.col = newCol;
 
         collectCoin();
+	if(
+    	player.coins === TOTAL_COINS &&
+     map[player.row][player.col] === "X"
+){
+
+    finishGame();
+
+}
 
     }
 
@@ -352,13 +372,7 @@ function checkWin(){
 
     }
 
-    clearInterval(timerInterval);
-
-    setTimeout(function(){
-
-        finishGame();
-
-    },300);
+    alert("Great! Return to the treasure chest!");
 
 }
 

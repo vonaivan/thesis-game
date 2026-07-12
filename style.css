@@ -210,9 +210,19 @@ button:hover{
 
 .coin{
 
-    background:#9be564;
+    background:#7ed957;
+
+    font-size:24px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
 
 }
+
+
 /* ==========================
    HUD
 ========================== */
@@ -405,7 +415,29 @@ canvas{
 
 .coin{
 
-    background:#9be564;
+    background:#7ed957;
+
+    font-size:24px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.chest{
+
+    background:#7ed957;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
 
 }
 
@@ -433,7 +465,15 @@ canvas{
 
 .coin{
 
-    background:#a5f56a;
+    background:#7ed957;
+
+    font-size:24px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
 
 }
 
